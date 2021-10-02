@@ -59,7 +59,7 @@ def multiplicative_inverse(e: int, phi: int) -> int:
     >>> multiplicative_inverse(7, 40)
     23
     """
-    delen: List[int] = []
+    delen: delen[int] = []
     phi1 = phi
     delen.insert(0, phi // e)
     while phi % e != 0:

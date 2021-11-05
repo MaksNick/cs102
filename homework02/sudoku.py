@@ -108,7 +108,7 @@ def get_block(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[s
     return block
 
 
-def find_empty_positions(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.Tuple[int, int]]:
+def find_empty_positions(grid: tp.List[tp.List[str]]) -> tp.List[tp.Tuple[int, int]]:
     """Найти первую свободную позицию в пазле
 
     >>> find_empty_positions([['1', '2', '.'], ['4', '5', '6'], ['7', '8', '9']])
@@ -133,7 +133,7 @@ def find_empty_positions(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.Tuple[in
         return tuple(empty)
 
 
-def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.Set[str]:
+def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str]:
     """Вернуть множество возможных значения для указанной позиции
 
     >>> grid = read_sudoku('puzzle1.txt')
@@ -156,7 +156,7 @@ def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -
         p3 = sr[i] in sr3
         if p1 == False and p2 == False and p3 == False:
             values1.append(sr[i])
-    return set(values1)
+    return values1
 
 
 def solve(grid: tp.List[tp.List[str]]) -> tp.List[tp.List[str]]:
@@ -175,7 +175,7 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.List[tp.List[str]]:
     empty_pos = find_empty_positions(grid)
     if empty_pos == (-1, -1):
         return grid
-    posib_pos_list = list(find_possible_values(grid, empty_pos))
+    posib_pos_list = find_possible_values(grid, empty_pos)
     for i in range(len(posib_pos_list)):
         grid[empty_pos[0]][empty_pos[1]] = posib_pos_list[i]
         if check_grid(grid, empty_pos[0], empty_pos[1]) == True:

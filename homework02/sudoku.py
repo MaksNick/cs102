@@ -1,6 +1,5 @@
 import pathlib
 import typing as tp
-import random
 
 T = tp.TypeVar("T")
 
@@ -273,6 +272,9 @@ def check_grid(grid, x, y):
         return False
 
 
+import random
+
+
 def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
     """Генерация судоку заполненного на N элементов
 
@@ -307,7 +309,6 @@ def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
     return grid
 
 
-print(generate_sudoku(40))
 if __name__ == "__main__":
     for fname in ["puzzle1.txt", "puzzle2.txt", "puzzle3.txt"]:
         grid = read_sudoku(fname)

@@ -12,7 +12,7 @@ def read_sudoku(path: tp.Union[str, pathlib.Path]) -> tp.List[tp.List[str]]:
     return create_grid(puzzle)
 
 
-def create_grid(puzzle: str) -> tp.List[tp.List[str]]:
+def create_grid(puzzle: str):  # -> tp.List[tp.List[str]]
     digits = [c for c in puzzle if c in "123456789."]
     grid = group(digits, 9)
     return grid
@@ -33,7 +33,7 @@ def display(grid: tp.List[tp.List[str]]) -> None:
     print()
 
 
-def group(values: tp.List[str], n: int) -> tp.List[tp.List[int]]:
+def group(values: tp.List[str], n: int):  # -> tp.List[tp.List[int]]
     """
     Сгруппировать значения values в список, состоящий из списков по n элементов
 

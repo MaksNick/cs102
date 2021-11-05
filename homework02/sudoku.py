@@ -43,7 +43,7 @@ def group(values: tp.List[str], n: int) -> tp.List[tp.List[str]]:
     [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
     """
     k = 0
-    A = [[0] * n for i in range(n)]
+    A = [["."] * n for i in range(n)]
 
     for i in range(n):
         for j in range(n):

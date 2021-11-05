@@ -33,7 +33,7 @@ def display(grid: tp.List[tp.List[str]]) -> None:
     print()
 
 
-def group(values: tp.List[int], n: int) -> tp.List[tp.List[int]]:
+def group(values: tp.List[str], n: int) -> tp.List[tp.List[str]]:
     """
     Сгруппировать значения values в список, состоящий из списков по n элементов
 
@@ -47,7 +47,7 @@ def group(values: tp.List[int], n: int) -> tp.List[tp.List[int]]:
 
     for i in range(n):
         for j in range(n):
-            A[i][j] = values[k]
+            A[i][j] = str(values[k])
             k += 1
     return A
 
@@ -157,28 +157,6 @@ def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -
         if p1 == False and p2 == False and p3 == False:
             values1.append(sr[i])
     return set(values1)
-
-
-def proverka(grid):
-    pr = 1
-    for i in range(9):
-        if len(set(get_row(grid, (0, i)))) != len(get_row(grid, (0, i))):
-            pr = 0
-            break
-        if len(set(get_col(grid, (i, 0)))) != len(get_col(grid, (0, i))):
-            pr = 0
-            break
-        if len(set(get_block(grid, (1, i)))) != len(get_block(grid, (1, i))):
-            pr = 0
-            break
-        if len(set(get_block(grid, (4, i)))) != len(get_block(grid, (4, i))):
-            pr = 0
-            break
-        if len(set(get_block(grid, (7, i)))) != len(get_block(grid, (7, i))):
-            pr = 0
-            break
-    return pr
-
 
 def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
     """Решение пазла, заданного в grid"""

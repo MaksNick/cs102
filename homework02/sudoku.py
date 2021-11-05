@@ -159,7 +159,7 @@ def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -
     return set(values1)
 
 
-def solve(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.List[tp.List[str]]]:
+def solve(grid: tp.List[tp.List[str]]) -> tp.List[tp.List[str]]:
     """Решение пазла, заданного в grid"""
     """ Как решать Судоку?
         1. Найти свободную позицию
@@ -280,9 +280,9 @@ def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
         x, y = random.randint(0, 8), random.randint(0, 8)
         while grid[x][y] != ".":
             x, y = random.randint(0, 8), random.randint(0, 8)
-        grid[x][y] = random.randint(1, 9)
+        grid[x][y] = str(random.randint(1, 9))
         while check_grid(grid, x, y) != True:
-            grid[x][y] = random.randint(1, 9)
+            grid[x][y] = str(random.randint(1, 9))
 
     return grid
 

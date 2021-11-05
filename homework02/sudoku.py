@@ -159,7 +159,9 @@ def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -
     return values1
 
 
-def solve(grid: tp.List[tp.List[str]]) -> tp.List[tp.List[str]]:
+def solve(
+    grid: tp.List[tp.List[str]],
+):  # если указывать, что выводить, выдает ошибку, так как на нерешаемых примерах он ничего не выведет
     """Решение пазла, заданного в grid"""
     """ Как решать Судоку?
         1. Найти свободную позицию
@@ -184,6 +186,8 @@ def solve(grid: tp.List[tp.List[str]]) -> tp.List[tp.List[str]]:
             grid[empty_pos[0]][empty_pos[1]] = "."
         else:
             grid[empty_pos[0]][empty_pos[1]] = "."
+
+    return False
 
 
 def check_solution(solution: tp.List[tp.List[str]]) -> bool:

@@ -33,7 +33,7 @@ def display(grid: tp.List[tp.List[str]]) -> None:
     print()
 
 
-def group(values: tp.List[T], n: int) -> tp.List[tp.List[T]]:
+def group(values: tp.List[int], n: int) -> tp.List[tp.List[int]]:
     """
     Сгруппировать значения values в список, состоящий из списков по n элементов
 
@@ -108,7 +108,7 @@ def get_block(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[s
     return block
 
 
-def find_empty_positions(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.Tuple[int, int]]:
+def find_empty_positions(grid: tp.List[tp.List[str]]) -> tp.Optional[tp.Tuple[int, int]] or bool:
     """Найти первую свободную позицию в пазле
 
     >>> find_empty_positions([['1', '2', '.'], ['4', '5', '6'], ['7', '8', '9']])
@@ -144,7 +144,7 @@ def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -
     >>> values == {'2', '5', '9'}
     True
     """
-    values = []
+    values: list = []
     sr = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
     sr1 = get_row(grid, pos)
     sr2 = get_col(grid, pos)

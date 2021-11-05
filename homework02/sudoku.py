@@ -33,7 +33,7 @@ def display(grid: tp.List[tp.List[str]]) -> None:
     print()
 
 
-def group(values: tp.List[str], n: int) -> tp.List[tp.List[str]]:
+def group(values: tp.List[str], n: int) -> tp.List[tp.List[int]]:
     """
     Сгруппировать значения values в список, состоящий из списков по n элементов
 
@@ -47,7 +47,7 @@ def group(values: tp.List[str], n: int) -> tp.List[tp.List[str]]:
 
     for i in range(n):
         for j in range(n):
-            A[i][j] = str(values[k])
+            A[i][j] = values[k]
             k += 1
     return A
 
@@ -133,7 +133,7 @@ def find_empty_positions(grid: tp.List[tp.List[str]]):
         return tuple(empty)
 
 
-def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str]:
+def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.Set[str]:
     """Вернуть множество возможных значения для указанной позиции
 
     >>> grid = read_sudoku('puzzle1.txt')
@@ -156,7 +156,7 @@ def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -
         p3 = sr[i] in sr3
         if p1 == False and p2 == False and p3 == False:
             values1.append(sr[i])
-    return values1
+    return set(values1)
 
 
 def solve(
@@ -177,7 +177,7 @@ def solve(
     empty_pos = find_empty_positions(grid)
     if empty_pos == (-1, -1):
         return grid
-    posib_pos_list = find_possible_values(grid, empty_pos)
+    posib_pos_list = list(find_possible_values(grid, empty_pos))
     for i in range(len(posib_pos_list)):
         grid[empty_pos[0]][empty_pos[1]] = posib_pos_list[i]
         if check_grid(grid, empty_pos[0], empty_pos[1]) == True:

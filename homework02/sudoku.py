@@ -119,8 +119,8 @@ def find_empty_positions(grid: tp.List[tp.List[str]]):
     (2, 0)
     """
     empty = []
-    for i in range(9):
-        for j in range(9):
+    for i in range(len(grid[0])):
+        for j in range(len(grid[0])):
             if grid[i][j] == ".":
                 empty.append(i)
                 empty.append(j)
@@ -161,7 +161,7 @@ def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -
 
 def solve(
     grid: tp.List[tp.List[str]],
-):  # если указывать, что выводить, выдает ошибку, так как на нерешаемых примерах он ничего не выведет
+):
     """Решение пазла, заданного в grid"""
     """ Как решать Судоку?
         1. Найти свободную позицию
@@ -228,33 +228,47 @@ def check_solution(solution: tp.List[tp.List[str]]) -> bool:
 
 
 def check_grid(grid, x, y):
+    k = 0
+    n = 0
+    m = 0
     A = get_row(grid, (x, 0))
     B = get_col(grid, (0, y))
     C = get_block(grid, (x, y))
-    A1 = []
-    B1 = []
-    C1 = []
     for i in range(9):
-        if A[i] != ".":
-            A1.append(A[i])
-        if B[i] != ".":
-            B1.append(B[i])
-        if C[i] != ".":
-            C1.append(C[i])
-    if (
-        len(set(A1)) == len(A1)
-        and len(set(B1)) == len(B1)
-        and len(set(C1)) == len(C1)
-        and len(A1) != 0
-        and len(B1) != 0
-        and len(C1) != 0
-    ):
-        return True
-    else:
-        return False
+        if (
+            grid[x][y] == A[i]
+            and k == 0
+            or grid[x][y] == B[i]
+            and n == 0
+            or grid[x][y] == C[i]
+            and m == 0
+        ):
+            if grid[x][y] == A[i]:
+                k += 1
+            if grid[x][y] == B[i]:
+                n += 1
+            if grid[x][y] == C[i]:
+                m += 1
+        else:
+            if A[i] == grid[x][y]:
+                return False
+            if B[i] == grid[x][y]:
+                return False
+            if C[i] == grid[x][y]:
+                return False
+    return True
 
 
 import random
+
+
+def num(grid: tp.List[tp.List[str]]) -> int:
+    num = 0
+    for i in range(9):
+        for j in range(9):
+            if grid[i][j] == ".":
+                num += 1
+    return num
 
 
 def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
@@ -279,15 +293,16 @@ def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
     >>> check_solution(solution)
     True
     """
-    grid = [["." for i in range(9)] for i in range(9)]
-    for i in range(N):
-        x, y = random.randint(0, 8), random.randint(0, 8)
-        while grid[x][y] != ".":
-            x, y = random.randint(0, 8), random.randint(0, 8)
-        grid[x][y] = str(random.randint(1, 9))
-        while check_grid(grid, x, y) != True:
-            grid[x][y] = str(random.randint(1, 9))
+    grid = [["." for j in range(9)] for i in range(9)]
 
+    grid_num = []
+    for i in range(9):
+        for j in range(9):
+            grid_num.append([i, j])
+    random.shuffle(grid_num)
+    grid = solve(grid)
+    for i in range(81 - N):
+        grid[grid_num[i][0]][grid_num[i][1]] = "."
     return grid
 
 

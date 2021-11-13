@@ -12,10 +12,7 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     ciphertext = []
     for i in range(len(plaintext)):
         if i > len(keyword) - 1:
-            if (
-                ord(keyword[(i) % len(keyword)]) >= 65
-                and ord(keyword[(i) % len(keyword)]) <= 90
-            ):
+            if ord(keyword[(i) % len(keyword)]) >= 65 and ord(keyword[(i) % len(keyword)]) <= 90:
                 shift = ord(keyword[(i) % len(keyword)]) - ord("A")
             else:
                 shift = ord(keyword[(i) % len(keyword)]) - ord("a")
@@ -54,10 +51,7 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
     plaintext = []
     for i in range(len(ciphertext)):
         if i > len(keyword) - 1:
-            if (
-                ord(keyword[(i) % len(keyword)]) >= 65
-                and ord(keyword[(i) % len(keyword)]) <= 90
-            ):
+            if ord(keyword[(i) % len(keyword)]) >= 65 and ord(keyword[(i) % len(keyword)]) <= 90:
                 shift = ord(keyword[(i) % len(keyword)]) - ord("A")
             else:
                 shift = ord(keyword[(i) % len(keyword)]) - ord("a")

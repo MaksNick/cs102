@@ -117,8 +117,8 @@ def make_step(grid: List[List[Union[str, int]]], k: int) -> List[List[Union[str,
 
 
 def shortest_path(
-    grid: List[List[Union[str, int]]], exit_coord: Tuple[int, int]
-) -> Optional[Union[Tuple[int, int], List[Tuple[int, int]]]]:
+    grid: List[List[int]], exit_coord: Tuple[int, int]
+) -> Optional[Union[Tuple[int, int], List[Tuple[int, ...]]]]:
     """
     :param grid:
     :param exit_coord:
@@ -235,6 +235,7 @@ def encircled_exit(grid: List[List[Union[str, int]]], coord: Tuple[int, int]) ->
                 return True
             else:
                 return False
+        return True
 
 
 def solve_maze(
@@ -268,7 +269,7 @@ def solve_maze(
             path = shortest_path(grid, coord[1])
             return grid1, path
         else:
-            return None
+            return grid1, None
 
 
 def add_path_to_grid(

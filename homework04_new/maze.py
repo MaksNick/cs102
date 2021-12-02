@@ -117,7 +117,7 @@ def make_step(grid: List[List[Union[str, int]]], k: int) -> List[List[Union[str,
 
 
 def shortest_path(
-    grid: List[List[Union[str, int]]], exit_coord: Tuple[int, int]
+    grid: List[List[int]], exit_coord: Tuple[int, int]
 ) -> Optional[Union[Tuple[int, int], List[Tuple[int, ...]]]]:
     """
     :param grid:
@@ -151,7 +151,7 @@ def shortest_path(
     return path
 
 
-def encircled_exit(grid: List[List[int]], coord: Tuple[int, int]) -> bool:
+def encircled_exit(grid: List[List[Union[str, int]]], coord: Tuple[int, int]) -> bool:
     """
     :param grid:
     :param coord:

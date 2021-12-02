@@ -117,7 +117,7 @@ def make_step(grid: List[List[Union[str, int]]], k: int) -> List[List[Union[str,
 
 
 def shortest_path(
-    grid: List[List[int]], exit_coord: Tuple[int, int]
+    grid: List[List[Union[str, int]]], exit_coord: Tuple[int, int]
 ) -> Optional[Union[Tuple[int, int], List[Tuple[int, ...]]]]:
     """
     :param grid:
@@ -247,6 +247,7 @@ def solve_maze(
     """
     lnx = len(grid)
     lny = len(grid[0])
+    grid1: list = [Union[str, int]]
     grid1 = [[""] * lny for i in range(lnx)]
     for x in range(0, lnx):
         for y in range(0, lny):

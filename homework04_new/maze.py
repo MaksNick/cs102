@@ -151,7 +151,7 @@ def shortest_path(
     return path
 
 
-def encircled_exit(grid: List[List[int]]], coord: Tuple[int, int]) -> bool:
+def encircled_exit(grid: List[List[int]], coord: Tuple[int, int]) -> bool:
     """
     :param grid:
     :param coord:

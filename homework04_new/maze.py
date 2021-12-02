@@ -26,7 +26,7 @@ def remove_wall(
     elif x - 1 != 0 and y + 1 == len(grid[1]) - 1:
         grid[x - 1][y] = " "
     else:
-        if randint(1,2) == 2:
+        if randint(1, 2) == 2:
             grid[x][y + 1] = " "
         else:
             grid[x - 1][y] = " "
@@ -42,7 +42,6 @@ def bin_tree_maze(
     :param random_exit:
     :return:
     """
-
     grid = create_grid(rows, cols)
     empty_cells = []
     for x, row in enumerate(grid):
@@ -59,7 +58,7 @@ def bin_tree_maze(
     num1_1 = [2 * i + 1 for i in range(0, ((len(grid[0]) - 1) // 2))]
     num2 = [0, len(grid) - 1]
     num2_1 = [0, len(grid[0]) - 1]
-    way = [1,2]
+    way = [1, 2]
     for i in range(2):
         if choice(way) == 2:
             grid[choice(num2)][choice(num1_1)] = "X"
@@ -73,6 +72,7 @@ def bin_tree_maze(
     # выбрать второе возможное направление
     # 3. перейти в следующую клетку, сносим между клетками стену
     # 4. повторять 2-3 до тех пор, пока не будут пройдены все клетки
+
 
 def get_exits(grid: List[List[Union[str, int]]]) -> List[Tuple[int, int]]:
     """
@@ -132,21 +132,21 @@ def shortest_path(
     while k != 1:
         if grid[i][j] == k:
             if grid[i - 1][j] == k - 1:
-                    k -= 1
-                    i, j = i - 1, j
-                    path.insert(0, tuple([i, j]))
+                k -= 1
+                i, j = i - 1, j
+                path.insert(0, tuple([i, j]))
             elif grid[i + 1][j] == k - 1:
-                    k -= 1
-                    i, j = i + 1, j
-                    path.insert(0, tuple([i, j]))
+                k -= 1
+                i, j = i + 1, j
+                path.insert(0, tuple([i, j]))
             elif grid[i][j - 1] == k - 1:
-                    k -= 1
-                    i, j = i, j - 1
-                    path.insert(0, tuple([i, j]))
+                k -= 1
+                i, j = i, j - 1
+                path.insert(0, tuple([i, j]))
             elif grid[i][j + 1] == k - 1:
-                    k -= 1
-                    i, j = i, j + 1
-                    path.insert(0, tuple([i, j]))
+                k -= 1
+                i, j = i, j + 1
+                path.insert(0, tuple([i, j]))
     path.reverse()
     return path
 

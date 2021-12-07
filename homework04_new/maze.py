@@ -54,10 +54,14 @@ def bin_tree_maze(
         for y in range(1, cols, 2):
             remove_wall(grid, (x, y))
 
-    num1 = [2 * i + 1 for i in range(0, ((len(grid) - 1) // 2))]
-    num1_1 = [2 * i + 1 for i in range(0, ((len(grid[0]) - 1) // 2))]
-    num2 = [0, len(grid) - 1]
-    num2_1 = [0, len(grid[0]) - 1]
+    num1 = [
+        2 * i + 1 for i in range(0, ((len(grid) - 1) // 2))
+    ]  # генерирует массив с нечетными индесами по длине
+    num1_1 = [
+        2 * i + 1 for i in range(0, ((len(grid[0]) - 1) // 2))
+    ]  # генерирует массив с нечетными индесами по высоте
+    num2 = [0, len(grid) - 1]  # генерирует массив с первым и последним индесами по длине
+    num2_1 = [0, len(grid[0]) - 1]  # генерирует массив с первым и последним индесами по высотв
     way = [1, 2]
     for i in range(2):
         if choice(way) == 2:
@@ -233,7 +237,7 @@ def encircled_exit(grid: List[List[Union[str, int]]], coord: Tuple[int, int]) ->
                 return True
             else:
                 return False
-        return True
+        return False
 
 
 def solve_maze(grid: List[List[Union[str, int]]]):

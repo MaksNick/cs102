@@ -213,7 +213,7 @@ def encircled_exit(grid: List[List[Union[str, int]]], coord: Tuple[int, int]) ->
                 or grid[coord[0]][lny - 2] != " "
             ):
                 return True
-        return False
+    return False
 
 
 def solve_maze(grid: List[List[Union[str, int]]]):
@@ -245,9 +245,7 @@ def solve_maze(grid: List[List[Union[str, int]]]):
                 k += 1
             path = shortest_path(grid, coord[1])
             return grid1, path
-        else:
-            return grid1, None
-    return grid1, path
+    return grid1, None
 
 
 def add_path_to_grid(

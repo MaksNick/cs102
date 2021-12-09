@@ -167,18 +167,12 @@ def encircled_exit(grid: List[List[Union[str, int]]], coord: Tuple[int, int]) ->
     if coord[0] == 1 and coord[1] == 0 or coord[0] == 0 and coord[1] == 1:
         if grid[2][1] != " " and grid[1][2] != " " and grid[1][1] != " ":
             return True
-        else:
-            return False
     elif coord[0] == 0 and coord[1] == lny - 2 or coord[0] == 1 and coord[1] == lny - 1:
         if grid[1][lny - 3] != " " and grid[2][lny - 2] != " " and grid[1][lny - 2] != " ":
             return True
-        else:
-            return False
     elif coord[0] == lnx - 1 and coord[1] == 1 or coord[0] == lnx - 2 and coord[1] == 0:
         if grid[lnx - 3][1] != " " and grid[lnx - 2][2] != " " and grid[lnx - 2][1] != " ":
             return True
-        else:
-            return False
     elif coord[0] == lnx - 1 and coord[1] == lny - 2 or coord[0] == lnx - 2 and coord[1] == lny - 1:
         if (
             grid[lnx - 1][lny - 3] != " "
@@ -186,8 +180,6 @@ def encircled_exit(grid: List[List[Union[str, int]]], coord: Tuple[int, int]) ->
             and grid[lnx - 2][lny - 2] != " "
         ):
             return True
-        else:
-            return False
     else:
         if coord[0] == 0:
             if (
@@ -197,8 +189,6 @@ def encircled_exit(grid: List[List[Union[str, int]]], coord: Tuple[int, int]) ->
                 or grid[1][coord[1]] != " "
             ):
                 return True
-            else:
-                return False
         elif coord[0] == lnx - 1:
             if (
                 grid[lnx - 2][coord[1] + 1] != " "
@@ -207,8 +197,6 @@ def encircled_exit(grid: List[List[Union[str, int]]], coord: Tuple[int, int]) ->
                 or grid[lnx - 2][coord[1]] != " "
             ):
                 return True
-            else:
-                return False
         elif coord[1] == 0:
             if (
                 grid[coord[0] + 1][1] != " "
@@ -217,8 +205,6 @@ def encircled_exit(grid: List[List[Union[str, int]]], coord: Tuple[int, int]) ->
                 or grid[coord[0]][1] != " "
             ):
                 return True
-            else:
-                return False
         elif coord[1] == lny - 1:
             if (
                 grid[coord[0] + 1][lny - 2] != " "
@@ -227,8 +213,6 @@ def encircled_exit(grid: List[List[Union[str, int]]], coord: Tuple[int, int]) ->
                 or grid[coord[0]][lny - 2] != " "
             ):
                 return True
-            else:
-                return False
         return False
 
 

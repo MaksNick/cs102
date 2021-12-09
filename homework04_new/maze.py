@@ -19,17 +19,15 @@ def remove_wall(
     """
     x = coord[0]
     y = coord[1]
-    if x - 1 == 0 and y + 1 == len(grid[1]) - 1:
-        None
+    if x - 1 != 0 and y + 1 != len(grid[1]) - 1:
+        if choice((0, 1)) == 1:
+            grid[x][y + 1] = " "
+        else:
+            grid[x - 1][y] = " "
     elif x - 1 == 0 and y + 1 != len(grid[1]) - 1:
         grid[x][y + 1] = " "
     elif x - 1 != 0 and y + 1 == len(grid[1]) - 1:
         grid[x - 1][y] = " "
-    else:
-        if randint(1, 2) == 2:
-            grid[x][y + 1] = " "
-        else:
-            grid[x - 1][y] = " "
     return grid
 
 
@@ -50,24 +48,19 @@ def bin_tree_maze(
                 grid[x][y] = " "
                 empty_cells.append((x, y))
 
-    for x in range(1, rows, 2):
-        for y in range(1, cols, 2):
-            remove_wall(grid, (x, y))
+    for i in range(len(empty_cells)):
+        remove_wall(grid, (empty_cells[i]))
 
-    num1 = [
-        2 * i + 1 for i in range(0, ((len(grid) - 1) // 2))
-    ]  # генерирует массив с нечетными индесами по длине
-    num1_1 = [
-        2 * i + 1 for i in range(0, ((len(grid[0]) - 1) // 2))
-    ]  # генерирует массив с нечетными индесами по высоте
-    num2 = [0, len(grid) - 1]  # генерирует массив с первым и последним индесами по длине
-    num2_1 = [0, len(grid[0]) - 1]  # генерирует массив с первым и последним индесами по высотв
-    way = [1, 2]
-    for i in range(2):
-        if choice(way) == 2:
-            grid[choice(num2)][choice(num1_1)] = "X"
-        else:
-            grid[choice(num1)][choice(num2_1)] = "X"
+    if random_exit:
+        x_in, x_out = randint(0, rows - 1), randint(0, rows - 1)
+        y_in = randint(0, cols - 1) if x_in in (0, rows - 1) else choice((0, cols - 1))
+        y_out = randint(0, cols - 1) if x_out in (0, rows - 1) else choice((0, cols - 1))
+    else:
+        x_in, y_in = 0, cols - 2
+        x_out, y_out = rows - 1, 1
+
+    grid[x_in][y_in], grid[x_out][y_out] = "X", "X"
+
     return grid
 
     # 1. выбрать любую клетку
@@ -136,20 +129,19 @@ def shortest_path(grid, exit_coord: Tuple[int, int]) -> List[Tuple[int, ...]]:
             if grid[i - 1][j] == k - 1:
                 k -= 1
                 i, j = i - 1, j
-                path.insert(0, tuple([i, j]))
+                path.append(tuple([i, j]))
             elif grid[i + 1][j] == k - 1:
                 k -= 1
                 i, j = i + 1, j
-                path.insert(0, tuple([i, j]))
+                path.append(tuple([i, j]))
             elif grid[i][j - 1] == k - 1:
                 k -= 1
                 i, j = i, j - 1
-                path.insert(0, tuple([i, j]))
+                path.append(tuple([i, j]))
             elif grid[i][j + 1] == k - 1:
                 k -= 1
                 i, j = i, j + 1
-                path.insert(0, tuple([i, j]))
-    path.reverse()
+                path.append(tuple([i, j]))
     return path
 
 
@@ -256,7 +248,7 @@ def solve_maze(grid: List[List[Union[str, int]]]):
     if len(coord) == 1:
         return (grid, coord[0])
     else:
-        if encircled_exit(grid, coord[0]) == False and encircled_exit(grid, coord[1]) == False:
+        if not encircled_exit(grid, coord[0]) and not encircled_exit(grid, coord[1]):
             for x in range(0, lnx):
                 for y in range(0, lny):
                     if grid[x][y] == " ":
@@ -271,6 +263,7 @@ def solve_maze(grid: List[List[Union[str, int]]]):
             return grid1, path
         else:
             return grid1, None
+    return grid1, path
 
 
 def add_path_to_grid(

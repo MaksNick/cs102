@@ -231,20 +231,19 @@ def solve_maze(grid: List[List[Union[str, int]]]):
     coord = get_exits(grid)
     if len(coord) == 1:
         return (grid, coord[0])
-    else:
-        if not encircled_exit(grid, coord[0]) and not encircled_exit(grid, coord[1]):
-            for x in range(0, lnx):
-                for y in range(0, lny):
-                    if grid[x][y] == " ":
-                        grid[x][y] = 0
-            grid[coord[0][0]][coord[0][1]] = 1
-            grid[coord[1][0]][coord[1][1]] = 0
-            k = 1
-            while grid[coord[1][0]][coord[1][1]] == 0:
-                grid = make_step(grid, k)
-                k += 1
-            path = shortest_path(grid, coord[1])
-            return grid1, path
+    if not encircled_exit(grid, coord[0]) and not encircled_exit(grid, coord[1]):
+        for x in range(0, lnx):
+            for y in range(0, lny):
+                if grid[x][y] == " ":
+                    grid[x][y] = 0
+        grid[coord[0][0]][coord[0][1]] = 1
+        grid[coord[1][0]][coord[1][1]] = 0
+        k = 1
+        while grid[coord[1][0]][coord[1][1]] == 0:
+            grid = make_step(grid, k)
+            k += 1
+        path = shortest_path(grid, coord[1])
+        return grid1, path
     return grid1, None
 
 

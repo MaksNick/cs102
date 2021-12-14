@@ -17,16 +17,17 @@ def remove_wall(
     :param coord:
     :return:
     """
+    lny = len(grid[0])
     x = coord[0]
     y = coord[1]
-    if x - 1 != 0 and y + 1 != len(grid[1]) - 1:
+    if x - 1 != 0 and y + 1 != lny - 1:
         if choice((0, 1)) == 1:
             grid[x][y + 1] = " "
         else:
             grid[x - 1][y] = " "
-    elif x - 1 == 0 and y + 1 != len(grid[1]) - 1:
+    elif x - 1 == 0 and y + 1 != lny - 1:
         grid[x][y + 1] = " "
-    elif x - 1 != 0 and y + 1 == len(grid[1]) - 1:
+    elif x - 1 != 0 and y + 1 == lny - 1:
         grid[x - 1][y] = " "
     return grid
 
@@ -48,8 +49,8 @@ def bin_tree_maze(
                 grid[x][y] = " "
                 empty_cells.append((x, y))
 
-    for i in range(len(empty_cells)):
-        remove_wall(grid, (empty_cells[i]))
+    for i, cell in enumerate(empty_cells):
+        remove_wall(grid, cell)
 
     if random_exit:
         x_in, x_out = randint(0, rows - 1), randint(0, rows - 1)
@@ -181,38 +182,14 @@ def encircled_exit(grid: List[List[Union[str, int]]], coord: Tuple[int, int]) ->
         ):
             return True
     else:
-        if coord[0] == 0:
-            if (
-                grid[1][coord[1] + 1] != " "
-                and grid[1][coord[1] - 1] != " "
-                and grid[2][coord[1]] != " "
-                or grid[1][coord[1]] != " "
-            ):
-                return True
-        elif coord[0] == lnx - 1:
-            if (
-                grid[lnx - 2][coord[1] + 1] != " "
-                and grid[lnx - 2][coord[1] - 1] != " "
-                and grid[lnx - 3][coord[1]] != " "
-                or grid[lnx - 2][coord[1]] != " "
-            ):
-                return True
-        elif coord[1] == 0:
-            if (
-                grid[coord[0] + 1][1] != " "
-                and grid[coord[0] - 1][1] != " "
-                and grid[coord[0]][2] != " "
-                or grid[coord[0]][1] != " "
-            ):
-                return True
-        elif coord[1] == lny - 1:
-            if (
-                grid[coord[0] + 1][lny - 2] != " "
-                and grid[coord[0] - 1][lny - 2] != " "
-                and grid[coord[0]][lny - 3] != " "
-                or grid[coord[0]][lny - 2] != " "
-            ):
-                return True
+        if coord[0] == 0 and grid[1][coord[1]] != " ":
+            return True
+        elif coord[0] == lnx - 1 and grid[lnx - 2][coord[1]] != " ":
+            return True
+        elif coord[1] == 0 and grid[coord[0]][1] != " ":
+            return True
+        elif coord[1] == lny - 1 and grid[coord[0]][lny - 2] != " ":
+            return True
     return False
 
 
@@ -223,17 +200,12 @@ def solve_maze(grid: List[List[Union[str, int]]]):
     """
     lnx = len(grid)
     lny = len(grid[0])
-    grid1: list = [Union[str, int]]
-    grid1 = [[""] * lny for i in range(lnx)]
-    for x in range(0, lnx):
-        for y in range(0, lny):
-            grid1[x][y] = grid[x][y]
     coord = get_exits(grid)
     if len(coord) == 1:
         return (grid, coord[0])
     if not encircled_exit(grid, coord[0]) and not encircled_exit(grid, coord[1]):
-        for x in range(0, lnx):
-            for y in range(0, lny):
+        for x in range(lnx):
+            for y in range(lny):
                 if grid[x][y] == " ":
                     grid[x][y] = 0
         grid[coord[0][0]][coord[0][1]] = 1
@@ -243,8 +215,12 @@ def solve_maze(grid: List[List[Union[str, int]]]):
             grid = make_step(grid, k)
             k += 1
         path = shortest_path(grid, coord[1])
-        return grid1, path
-    return grid1, None
+        for x in range(lnx):
+            for y in range(lny):
+                if grid[x][y] != " " and grid[x][y] != "■":
+                    grid[x][y] = " "
+        return grid, path
+    return grid, None
 
 
 def add_path_to_grid(
@@ -268,6 +244,6 @@ if __name__ == "__main__":
     print(pd.DataFrame(bin_tree_maze(15, 15)))
     GRID = bin_tree_maze(15, 15)
     print(pd.DataFrame(GRID))
-    GRID, PATH = solve_maze(GRID)
+    _, PATH = solve_maze(GRID)
     MAZE = add_path_to_grid(GRID, PATH)
     print(pd.DataFrame(MAZE))

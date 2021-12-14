@@ -1,5 +1,5 @@
 from copy import deepcopy
-from random import choice, randint
+from random import choice, randint, seed
 from typing import List, Optional, Tuple, Union
 
 import pandas as pd
@@ -20,14 +20,10 @@ def remove_wall(
     lny = len(grid[0])
     x = coord[0]
     y = coord[1]
-    if x - 1 != 0 and y + 1 != lny - 1:
-        if choice((0, 1)) == 1:
-            grid[x][y + 1] = " "
-        else:
-            grid[x - 1][y] = " "
-    elif x - 1 == 0 and y + 1 != lny - 1:
+    num = choice((0, 1))
+    if x - 1 != 0 and y + 1 != lny - 1 and num == 1 or x - 1 == 0 and y + 1 != lny - 1:
         grid[x][y + 1] = " "
-    elif x - 1 != 0 and y + 1 == lny - 1:
+    elif x - 1 != 0 and y + 1 != lny - 1 and num == 0 or x - 1 != 0 and y + 1 == lny - 1:
         grid[x - 1][y] = " "
     return grid
 
@@ -125,6 +121,21 @@ def shortest_path(grid, exit_coord: Tuple[int, int]) -> List[Tuple[int, ...]]:
     k = grid[exit_coord[0]][exit_coord[1]]
     i = exit_coord[0]
     j = exit_coord[1]
+    if grid[i][j] == k:
+        if j - 1 >= 0 and j + 1 <= len(grid[0]) - 1:
+            if grid[i][j - 1] == 1:
+                path.append(tuple([i, j - 1]))
+                return path
+            elif grid[i][j + 1] == 1:
+                path.append(tuple([i, j + 1]))
+                return path
+        if i - 1 >= 0 and i + 1 <= len(grid) - 1:
+            if grid[i - 1][j] == 1:
+                path.append(tuple([i - 1, j]))
+                return path
+            elif grid[i + 1][j] == 1:
+                path.append(tuple([i + 1, j]))
+                return path
     while k != 1:
         if grid[i][j] == k:
             if grid[i - 1][j] == k - 1:
@@ -242,7 +253,7 @@ def add_path_to_grid(
 
 if __name__ == "__main__":
     print(pd.DataFrame(bin_tree_maze(15, 15)))
-    GRID = bin_tree_maze(15, 15)
+    GRID = bin_tree_maze(5, 5)
     print(pd.DataFrame(GRID))
     _, PATH = solve_maze(GRID)
     MAZE = add_path_to_grid(GRID, PATH)

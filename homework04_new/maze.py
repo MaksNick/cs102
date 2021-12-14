@@ -126,14 +126,14 @@ def shortest_path(grid, exit_coord: Tuple[int, int]) -> List[Tuple[int, ...]]:
             if grid[i][j - 1] == 1:
                 path.append(tuple([i, j - 1]))
                 return path
-            elif grid[i][j + 1] == 1:
+            if grid[i][j + 1] == 1:
                 path.append(tuple([i, j + 1]))
                 return path
         if i - 1 >= 0 and i + 1 <= len(grid) - 1:
             if grid[i - 1][j] == 1:
                 path.append(tuple([i - 1, j]))
                 return path
-            elif grid[i + 1][j] == 1:
+            if grid[i + 1][j] == 1:
                 path.append(tuple([i + 1, j]))
                 return path
     while k != 1:
@@ -179,28 +179,27 @@ def encircled_exit(grid: List[List[Union[str, int]]], coord: Tuple[int, int]) ->
     if coord[0] == 1 and coord[1] == 0 or coord[0] == 0 and coord[1] == 1:
         if grid[2][1] != " " and grid[1][2] != " " and grid[1][1] != " ":
             return True
-    elif coord[0] == 0 and coord[1] == lny - 2 or coord[0] == 1 and coord[1] == lny - 1:
+    if coord[0] == 0 and coord[1] == lny - 2 or coord[0] == 1 and coord[1] == lny - 1:
         if grid[1][lny - 3] != " " and grid[2][lny - 2] != " " and grid[1][lny - 2] != " ":
             return True
-    elif coord[0] == lnx - 1 and coord[1] == 1 or coord[0] == lnx - 2 and coord[1] == 0:
+    if coord[0] == lnx - 1 and coord[1] == 1 or coord[0] == lnx - 2 and coord[1] == 0:
         if grid[lnx - 3][1] != " " and grid[lnx - 2][2] != " " and grid[lnx - 2][1] != " ":
             return True
-    elif coord[0] == lnx - 1 and coord[1] == lny - 2 or coord[0] == lnx - 2 and coord[1] == lny - 1:
+    if coord[0] == lnx - 1 and coord[1] == lny - 2 or coord[0] == lnx - 2 and coord[1] == lny - 1:
         if (
             grid[lnx - 1][lny - 3] != " "
             and grid[lnx - 3][lny - 2] != " "
             and grid[lnx - 2][lny - 2] != " "
         ):
             return True
-    else:
-        if coord[0] == 0 and grid[1][coord[1]] != " ":
-            return True
-        elif coord[0] == lnx - 1 and grid[lnx - 2][coord[1]] != " ":
-            return True
-        elif coord[1] == 0 and grid[coord[0]][1] != " ":
-            return True
-        elif coord[1] == lny - 1 and grid[coord[0]][lny - 2] != " ":
-            return True
+    if coord[0] == 0 and grid[1][coord[1]] != " ":
+        return True
+    if coord[0] == lnx - 1 and grid[lnx - 2][coord[1]] != " ":
+        return True
+    if coord[1] == 0 and grid[coord[0]][1] != " ":
+        return True
+    if coord[1] == lny - 1 and grid[coord[0]][lny - 2] != " ":
+        return True
     return False
 
 

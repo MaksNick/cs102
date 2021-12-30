@@ -25,21 +25,25 @@ class GameOfLife:
         # Текущее поколение клеток
         self.curr_generation = self.create_grid(randomize=randomize)
         # Максимальное число поколений
-        self.max_generations = max_generations
+        self.max_generations = 50
         # Текущее число поколений
         self.generations = 1
 
     def create_grid(self, randomize: bool = True) -> Grid:
-        grid = [[[""] for i in range(self.cell_width)] for j in range(self.cell_height)]
+        grid = []
         if randomize == False:
-            for x in range(self.cell_height):
-                for y in range(self.cell_width):
-                    grid[x][y] = 0
+            for _ in range(self.cell_height):
+                col = []
+                for _ in range(self.cell_width):
+                    col.append(0)
+                grid.append(col)
             return grid
         else:
-            for x in range(self.cell_height):
-                for y in range(self.cell_width):
-                    grid[x][y] = random.choice((0, 1))
+            for _ in range(self.cell_height):
+                col = []
+                for _ in range(self.cell_width):
+                    col.append(random.choice((0, 1)))
+                grid.append(col)
         return grid
 
     def get_neighbours(self, cell: Cell) -> Cells:
@@ -108,13 +112,15 @@ class GameOfLife:
         return cells
 
     def get_next_generation(self) -> Grid:
-        grid = [[[""] for i in range(self.cell_width)] for j in range(self.cell_height)]
+        grid = []
         for x in range(self.cell_height):
+            col = []
             for y in range(self.cell_width):
                 if len(self.get_neighbours((x, y))) == 2 or len(self.get_neighbours((x, y))) == 3:
-                    grid[x][y] = 1
+                    col.append(1)
                 else:
-                    grid[x][y] = 0
+                    col.append(0)
+            grid.append(col)
         return grid
 
     def step(self) -> None:
@@ -153,9 +159,9 @@ class GameOfLife:
         grid = []
         with open(filename, "r", encoding="utf-8") as f:
             for line in f:
-                line = [int(line[i]) for i in range(len(line) - 1)]
-                if line:
-                    grid.append(line)
+                l = [int(line[i]) for i in range(len(line) - 1)]
+                if l:
+                    grid.append(l)
         life = GameOfLife((len(grid), len(grid[0])), max_generations=50)
         life.curr_generation = grid
         return life

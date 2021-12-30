@@ -79,16 +79,20 @@ class GameOfLife:
         out : Grid
             Матрица клеток размером `cell_height` х `cell_width`.
         """
-        grid = [[[""] for i in range(self.cell_width)] for j in range(self.cell_height)]
+        grid = []
         if randomize == False:
-            for x in range(self.cell_height):
-                for y in range(self.cell_width):
-                    grid[x][y] = 0
+            for _ in range(self.cell_height):
+                col = []
+                for _ in range(self.cell_width):
+                    col.append(0)
+                grid.append(col)
             return grid
         else:
-            for x in range(self.cell_height):
-                for y in range(self.cell_width):
-                    grid[x][y] = random.choice((0, 1))
+            for _ in range(self.cell_height):
+                col = []
+                for _ in range(self.cell_width):
+                    col.append(random.choice((0, 1)))
+                grid.append(col)
         return grid
 
     def draw_grid(self) -> None:
@@ -201,13 +205,15 @@ class GameOfLife:
         out : Grid
             Новое поколение клеток.
         """
-        grid = [[[""] for i in range(self.cell_width)] for j in range(self.cell_height)]
+        grid = []
         for x in range(self.cell_height):
+            col = []
             for y in range(self.cell_width):
                 if len(self.get_neighbours((x, y))) == 2 or len(self.get_neighbours((x, y))) == 3:
-                    grid[x][y] = 1
+                    col.append(1)
                 else:
-                    grid[x][y] = 0
+                    col.append(0)
+            grid.append(col)
         return grid
 
 

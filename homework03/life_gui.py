@@ -66,12 +66,12 @@ class GUI(UI):
             # Выполнение одного шага игры (обновление состояния ячеек)
             self.draw_grid()
             self.draw_lines()
-            self.grid = self.get_next_generation()
+            self.grid = self.life.get_next_generation()
             pygame.display.flip()
             clock.tick(self.speed)
         pygame.quit()
 
 
-if __name__ == "__main__":
+"""if __name__ == "__main__":
     life = GameOfLife((24, 80), max_generations=50)
-    GUI(life).run()
+    GUI(life).run()"""

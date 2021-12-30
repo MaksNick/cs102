@@ -111,10 +111,7 @@ class GameOfLife:
         grid = [[[""] for i in range(self.cell_width)] for j in range(self.cell_height)]
         for x in range(self.cell_height):
             for y in range(self.cell_width):
-                if (
-                    len(self.get_neighbours((x, y))) == 2
-                    or len(self.get_neighbours((x, y))) == 3
-                ):
+                if len(self.get_neighbours((x, y))) == 2 or len(self.get_neighbours((x, y))) == 3:
                     grid[x][y] = 1
                 else:
                     grid[x][y] = 0

@@ -1,9 +1,9 @@
+from copy import deepcopy
+
 import pygame
 from life import GameOfLife
 from pygame.locals import *
 from ui import UI
-from copy import deepcopy
-
 
 class GUI(UI):
     def __init__(self, life: GameOfLife, cell_size: int = 50, speed: int = 1) -> None:

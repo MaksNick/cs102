@@ -52,62 +52,23 @@ class GameOfLife:
         lnx = len(self.curr_generation) - 1
         lny = len(self.curr_generation[0]) - 1
         cells = []
-        if x == 0 and y == 0:
-            cells.append(self.curr_generation[0][1])
-            cells.append(self.curr_generation[1][0])
-            cells.append(self.curr_generation[1][1])
-            cells = [i for i in cells if i != 0]
-            return cells
-        if x == 0 and y == lny:
-            cells.append(self.curr_generation[0][lny - 1])
-            cells.append(self.curr_generation[1][lny])
-            cells.append(self.curr_generation[1][lny - 1])
-            cells = [i for i in cells if i != 0]
-            return cells
-        if x == lnx and y == 0:
-            cells.append(self.curr_generation[lnx][1])
-            cells.append(self.curr_generation[lnx - 1][0])
-            cells.append(self.curr_generation[lnx - 1][1])
-            cells = [i for i in cells if i != 0]
-            return cells
-        if x == lnx and y == lny:
-            cells.append(self.curr_generation[lnx - 1][lny])
-            cells.append(self.curr_generation[lnx][lny - 1])
-            cells.append(self.curr_generation[lnx - 1][lny - 1])
-            cells = [i for i in cells if i != 0]
-            return cells
-        if x == 0:
-            for ik in range(0, 2):
-                for jk in range(y - 1, y + 2):
-                    if x != ik and y != jk:
-                        cells.append(self.curr_generation[ik][jk])
-            cells = [i for i in cells if i != 0]
-            return cells
-        if x == lnx:
-            for ik in range(lnx - 1, lnx + 1):
-                for jk in range(y - 1, y + 2):
-                    if x != ik and y != jk:
-                        cells.append(self.curr_generation[ik][jk])
-            cells = [i for i in cells if i != 0]
-            return cells
-        if y == 0:
-            for ik in range(x - 1, x + 2):
-                for jk in range(0, 2):
-                    if x != ik and y != jk:
-                        cells.append(self.curr_generation[ik][jk])
-            cells = [i for i in cells if i != 0]
-            return cells
-        if y == lny:
-            for ik in range(x - 1, x + 2):
-                for jk in range(lny - 1, lny + 1):
-                    if x != ik and y != jk:
-                        cells.append(self.curr_generation[ik][jk])
-            cells = [i for i in cells if i != 0]
-            return cells
-        for ik in range(x - 1, x + 2):
-            for jk in range(y - 1, y + 2):
-                if x != ik and y != jk:
-                    cells.append(self.curr_generation[ik][jk])
+        if x != 0:
+            cells.append(self.curr_generation[x - 1][y])
+            if y != 0:
+                cells.append(self.curr_generation[x - 1][y - 1])
+            if y != lny:
+                cells.append(self.curr_generation[x - 1][y + 1])
+        if x != lnx:
+            cells.append(self.curr_generation[x + 1][y])
+            if y != 0:
+                cells.append(self.curr_generation[x + 1][y - 1])
+            if y != lny:
+                cells.append(self.curr_generation[x + 1][y + 1])
+        if y != 0:
+            cells.append(self.curr_generation[x][y - 1])
+        if y != lny:
+            cells.append(self.curr_generation[x][y + 1])
+
         cells = [i for i in cells if i != 0]
         return cells
 

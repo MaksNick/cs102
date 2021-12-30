@@ -95,7 +95,7 @@ class GameOfLife:
         """
         Выполнить один шаг игры.
         """
-        if not self.is_changing and self.is_max_generations_exceeded:
+        if self.is_changing and self.is_max_generations_exceeded:
             self.prev_generation = deepcopy(self.curr_generation)
             self.curr_generation = self.get_next_generation()
             self.generations += 1
@@ -116,8 +116,8 @@ class GameOfLife:
         Изменилось ли состояние клеток с предыдущего шага.
         """
         if self.prev_generation == self.curr_generation:
-            return True
-        return False
+            return False
+        return True
 
     @staticmethod
     def from_file(filename: pathlib.Path) -> "GameOfLife":

@@ -154,7 +154,6 @@ class GameOfLife:
         if y != lny:
             cells.append(self.grid[x][y + 1])
 
-        cells = [i for i in cells if i != 0]
         return cells
 
     def get_next_generation(self) -> Grid:
@@ -171,12 +170,12 @@ class GameOfLife:
             col = []
             for y in range(0, self.cell_width):
                 if (
-                    len(self.get_neighbours((x, y))) == 3
+                    sum(self.get_neighbours((x, y))) == 3
                     and self.grid[x][y] == 0
                     or self.grid[x][y] == 1
                     and (
-                        len(self.get_neighbours((x, y))) == 3
-                        or len(self.get_neighbours((x, y))) == 2
+                        sum(self.get_neighbours((x, y))) == 3
+                        or sum(self.get_neighbours((x, y))) == 2
                     )
                 ):
                     col.append(1)

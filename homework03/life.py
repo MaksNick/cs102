@@ -69,7 +69,6 @@ class GameOfLife:
         if y != lny:
             cells.append(self.curr_generation[x][y + 1])
 
-        cells = [i for i in cells if i != 0]
         return cells
 
     def get_next_generation(self) -> Grid:
@@ -78,12 +77,12 @@ class GameOfLife:
             col = []
             for y in range(0, self.cell_width):
                 if (
-                    len(self.get_neighbours((x, y))) == 3
+                    sum(self.get_neighbours((x, y))) == 3
                     and self.curr_generation[x][y] == 0
                     or self.curr_generation[x][y] == 1
                     and (
-                        len(self.get_neighbours((x, y))) == 3
-                        or len(self.get_neighbours((x, y))) == 2
+                        sum(self.get_neighbours((x, y))) == 3
+                        or sum(self.get_neighbours((x, y))) == 2
                     )
                 ):
                     col.append(1)
@@ -96,7 +95,7 @@ class GameOfLife:
         """
         Выполнить один шаг игры.
         """
-        if self.is_changing and not self.is_max_generations_exceeded:
+        if not self.is_changing and self.is_max_generations_exceeded:
             self.prev_generation = deepcopy(self.curr_generation)
             self.curr_generation = self.get_next_generation()
             self.generations += 1
@@ -108,8 +107,8 @@ class GameOfLife:
         Не превысило ли текущее число поколений максимально допустимое.
         """
         if self.generations >= self.max_generations:
-            return True
-        return False
+            return False
+        return True
 
     @property
     def is_changing(self) -> bool:
@@ -117,8 +116,8 @@ class GameOfLife:
         Изменилось ли состояние клеток с предыдущего шага.
         """
         if self.prev_generation == self.curr_generation:
-            return False
-        return True
+            return True
+        return False
 
     @staticmethod
     def from_file(filename: pathlib.Path) -> "GameOfLife":

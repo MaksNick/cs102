@@ -5,6 +5,7 @@ from life import GameOfLife
 from pygame.locals import *
 from ui import UI
 
+
 class GUI(UI):
     def __init__(self, life: GameOfLife, cell_size: int = 50, speed: int = 1) -> None:
         super().__init__(life)

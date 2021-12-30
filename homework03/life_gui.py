@@ -2,15 +2,16 @@ import pygame
 from life import GameOfLife
 from pygame.locals import *
 from ui import UI
+from copy import deepcopy
 
 
 class GUI(UI):
-    def __init__(self, life: GameOfLife, cell_size: int = 10, speed: int = 10) -> None:
+    def __init__(self, life: GameOfLife, cell_size: int = 50, speed: int = 1) -> None:
         super().__init__(life)
 
         # параметры игрового поля
-        self.width = 640
-        self.height = 480
+        self.width = 250
+        self.height = 250
         self.cell_size = cell_size
 
         # Устанавливаем размер окна
@@ -24,6 +25,7 @@ class GUI(UI):
 
         # Скорость протекания игры
         self.speed = speed
+        self.paused = False
 
     def draw_lines(self) -> None:
         for x in range(0, self.width, self.cell_size):
@@ -34,7 +36,7 @@ class GUI(UI):
     def draw_grid(self) -> None:
         for x in range(0, self.height, self.cell_size):
             for y in range(0, self.width, self.cell_size):
-                if self.grid[x // self.cell_size][y // self.cell_size] == 0:
+                if self.life.curr_generation[x // self.cell_size][y // self.cell_size] == 0:
                     pygame.draw.rect(
                         self.screen,
                         pygame.Color("white"),
@@ -48,30 +50,9 @@ class GUI(UI):
                     )
 
     def run(self) -> None:
-        pygame.init()
-        clock = pygame.time.Clock()
-        pygame.display.set_caption("Game of Life")
-        self.screen.fill(pygame.Color("white"))
-
-        # Создание списка клеток
-        self.grid = self.life.create_grid()
-
-        running = True
-        while running:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    running = False
-
-            # Отрисовка списка клеток
-            # Выполнение одного шага игры (обновление состояния ячеек)
-            self.draw_grid()
-            self.draw_lines()
-            self.grid = self.life.get_next_generation()
-            pygame.display.flip()
-            clock.tick(self.speed)
-        pygame.quit()
+        None
 
 
-"""if __name__ == "__main__":
-    life = GameOfLife((24, 80), max_generations=50)
-    GUI(life).run()"""
+if __name__ == "__main__":
+    life = GameOfLife((5, 5), max_generations=50)
+    GUI(life).run()

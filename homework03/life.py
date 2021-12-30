@@ -74,10 +74,18 @@ class GameOfLife:
 
     def get_next_generation(self) -> Grid:
         grid = []
-        for x in range(self.cell_height):
+        for x in range(0, self.cell_height):
             col = []
-            for y in range(self.cell_width):
-                if len(self.get_neighbours((x, y))) == 2 or len(self.get_neighbours((x, y))) == 3:
+            for y in range(0, self.cell_width):
+                if (
+                    len(self.get_neighbours((x, y))) == 3
+                    and self.curr_generation[x][y] == 0
+                    or self.curr_generation[x][y] == 1
+                    and (
+                        len(self.get_neighbours((x, y))) == 3
+                        or len(self.get_neighbours((x, y))) == 2
+                    )
+                ):
                     col.append(1)
                 else:
                     col.append(0)

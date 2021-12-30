@@ -11,7 +11,7 @@ Grid = tp.List[Cells]
 
 class GameOfLife:
     def __init__(
-        self, width: int = 250, height: int = 250, cell_size: int = 10, speed: int = 1
+        self, width: int = 250, height: int = 250, cell_size: int = 50, speed: int = 10
     ) -> None:
         self.width = width
         self.height = height
@@ -167,10 +167,18 @@ class GameOfLife:
             Новое поколение клеток.
         """
         grid = []
-        for x in range(self.cell_height):
+        for x in range(0, self.cell_height):
             col = []
-            for y in range(self.cell_width):
-                if len(self.get_neighbours((x, y))) == 2 or len(self.get_neighbours((x, y))) == 3:
+            for y in range(0, self.cell_width):
+                if (
+                    len(self.get_neighbours((x, y))) == 3
+                    and self.grid[x][y] == 0
+                    or self.grid[x][y] == 1
+                    and (
+                        len(self.get_neighbours((x, y))) == 3
+                        or len(self.get_neighbours((x, y))) == 2
+                    )
+                ):
                     col.append(1)
                 else:
                     col.append(0)

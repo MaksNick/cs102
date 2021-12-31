@@ -38,7 +38,7 @@ class GameOfLife:
                     col.append(0)
                 grid.append(col)
             return grid
-        
+
         for _ in range(self.cell_height):
             col = []
             for _ in range(self.cell_width):

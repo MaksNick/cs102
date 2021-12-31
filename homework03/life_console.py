@@ -15,7 +15,7 @@ class Console(UI):
     def draw_grid(self, screen) -> None:
         """Отобразить состояние клеток."""
         screen.clear()
-        for y, row in enumerate(self.curr_generation):
+        for y, row in enumerate(self.life.curr_generation):
             for x, _ in enumerate(row):
                 if self.life.curr_generation[y][x] == 0:
                     screen.addstr(y + 1, x + 1, " ")

@@ -73,7 +73,7 @@ class GUI(UI):
                 # режим паузы
 
                 if self.pause and event.type == pygame.MOUSEBUTTONDOWN:
-                    if count == True:
+                    if count is True:
                         count = False
                         self.life.curr_generation = deepcopy(self.life.prev_generation)
                     if (

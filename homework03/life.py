@@ -95,11 +95,11 @@ class GameOfLife:
         """
         Выполнить один шаг игры.
         """
-        if self.is_changing and self.is_max_generations_exceeded:
+        if self.is_changing and not self.is_max_generations_exceeded:
             self.prev_generation = deepcopy(self.curr_generation)
             self.curr_generation = self.get_next_generation()
-            self.generations += 1
             self.save(pathlib.Path("glider-4-steps.txt"))
+            self.generations += 1
 
     @property
     def is_max_generations_exceeded(self) -> bool:
@@ -107,8 +107,8 @@ class GameOfLife:
         Не превысило ли текущее число поколений максимально допустимое.
         """
         if self.generations >= self.max_generations:
-            return False
-        return True
+            return True
+        return False
 
     @property
     def is_changing(self) -> bool:

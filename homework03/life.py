@@ -25,7 +25,7 @@ class GameOfLife:
         # Текущее поколение клеток
         self.curr_generation = self.create_grid(randomize=randomize)
         # Максимальное число поколений
-        self.max_generations = 50
+        self.max_generations = max_generations
         # Текущее число поколений
         self.generations = 1
 
@@ -130,7 +130,7 @@ class GameOfLife:
                 l = [int(line[i]) for i in range(len(line) - 1)]
                 if l:
                     grid.append(l)
-        life = GameOfLife((len(grid), len(grid[0])), max_generations=50)
+        life = GameOfLife((len(grid), len(grid[0])))
         life.curr_generation = grid
         return life
 

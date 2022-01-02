@@ -10,7 +10,7 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     'LXFOPVEFRNHR'
     """
     ciphertext = []
-    for i in range(len(plaintext)):
+    for i, _ in enumerate(plaintext):
         if i > len(keyword) - 1:
             symb = i % len(keyword)
             shift = (
@@ -45,7 +45,7 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
     'ATTACKATDAWN'
     """
     plaintext = []
-    for i in range(len(ciphertext)):
+    for i, _ in enumerate(ciphertext):
         if i > len(keyword) - 1:
             symb = i % len(keyword)
             shift = (

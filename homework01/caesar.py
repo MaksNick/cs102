@@ -15,7 +15,7 @@ def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
     ''
     """
     ciphertext = []
-    for i in range(len(plaintext)):
+    for i, _ in enumerate(plaintext):
         if plaintext[i].isalpha():
             b = chr(ord(plaintext[i]) + shift % 26)
             if not b.isalpha() or plaintext[i].islower() != b.islower():
@@ -40,7 +40,7 @@ def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
     ''
     """
     plaintext = []
-    for i in range(len(ciphertext)):
+    for i, _ in enumerate(ciphertext):
         if ciphertext[i].isalpha():
             b = chr(ord(ciphertext[i]) - shift % 26)
             if not b.isalpha() or ciphertext[i].islower() != b.islower():
@@ -58,7 +58,3 @@ def caesar_breaker_brute_force(ciphertext: str, dictionary: tp.Set[str]) -> int:
     best_shift = 0
     # PUT YOUR CODE HERE
     return best_shift
-
-
-if __name__ == "__main__":
-    print(decrypt_caesar(encrypt_caesar("python", 14), 14))

@@ -18,8 +18,7 @@ def encrypt_caesar(plaintext: str, shift: int = 3) -> str:
     for i, _ in enumerate(plaintext):
         if plaintext[i].isalpha():
             b = chr(ord(plaintext[i]) + shift % 26)
-            if not b.isalpha() or plaintext[i].islower() != b.islower():
-                b = chr(ord(b) - 26)
+            b = chr(ord(b) - 26) if not b.isalpha() or plaintext[i].islower() != b.islower() else b
             ciphertext.append(b)
         else:
             ciphertext.append(plaintext[i])
@@ -43,8 +42,7 @@ def decrypt_caesar(ciphertext: str, shift: int = 3) -> str:
     for i, _ in enumerate(ciphertext):
         if ciphertext[i].isalpha():
             b = chr(ord(ciphertext[i]) - shift % 26)
-            if not b.isalpha() or ciphertext[i].islower() != b.islower():
-                b = chr(ord(b) + 26)
+            b = chr(ord(b) + 26) if not b.isalpha() or ciphertext[i].islower() != b.islower() else b
             plaintext.append(b)
         else:
             plaintext.append(ciphertext[i])

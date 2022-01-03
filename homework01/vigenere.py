@@ -25,8 +25,7 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
 
         if plaintext[i].isalpha():
             b = chr(ord(plaintext[i]) + shift)
-            if not b.isalpha() or plaintext[i].islower() != b.islower():
-                b = chr(ord(b) - 26)
+            b = chr(ord(b) - 26) if not b.isalpha() or plaintext[i].islower() != b.islower() else b
             ciphertext.append(b)
         else:
             ciphertext.append(plaintext[i])
@@ -60,8 +59,7 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
 
         if ciphertext[i].isalpha():
             b = chr(ord(ciphertext[i]) - shift)
-            if not b.isalpha() or ciphertext[i].islower() != b.islower():
-                b = chr(ord(b) + 26)
+            b = chr(ord(b) + 26) if not b.isalpha() or ciphertext[i].islower() != b.islower() else b
             plaintext.append(b)
         else:
             plaintext.append(ciphertext[i])

@@ -42,14 +42,7 @@ def group(values: tp.List[str], n: int):  # -> tp.List[tp.List[int]]
     >>> group([1,2,3,4,5,6,7,8,9], 3)
     [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
     """
-    k = 0
-    A = [["."] * n for i in range(n)]
-
-    for i in range(n):
-        for j in range(n):
-            A[i][j] = values[k]
-            k += 1
-    return A
+    return [[values[i + j] for j in range(n)] for i in range(0, len(values), n)]
 
 
 def get_row(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str]:
@@ -62,11 +55,8 @@ def get_row(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str
     >>> get_row([['1', '2', '3'], ['4', '5', '6'], ['.', '8', '9']], (2, 0))
     ['.', '8', '9']
     """
-    row = []
-    for i in range(len(grid)):
-        row.append(grid[pos[0]][i])
 
-    return row
+    return grid[pos[0]]
 
 
 def get_col(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str]:
@@ -79,11 +69,8 @@ def get_col(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str
     >>> get_col([['1', '2', '3'], ['4', '5', '6'], ['.', '8', '9']], (0, 2))
     ['3', '6', '9']
     """
-    col = []
-    for i in range(len(grid)):
-        col.append(grid[i][pos[1]])
 
-    return col
+    return [grid[i][pos[1]] for i, _ in enumerate(grid)]
 
 
 def get_block(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[str]:
@@ -97,15 +84,8 @@ def get_block(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[s
     >>> get_block(grid, (8, 8))
     ['2', '8', '.', '.', '.', '5', '.', '7', '9']
     """
-    block = []
-    k = 0
-    i1 = pos[0] - pos[0] % 3
-    j1 = pos[1] - pos[1] % 3
-    for i in range(i1, i1 + 3):
-        for j in range(j1, j1 + 3):
-            block.append(grid[i][j])
-            k += 1
-    return block
+    i1, j1 = pos[0] - pos[0] % 3, pos[1] - pos[1] % 3
+    return [grid[i][j] for j in range(j1, j1 + 3) for i in range(i1, i1 + 3)]
 
 
 def find_empty_positions(grid: tp.List[tp.List[str]]):
@@ -118,19 +98,11 @@ def find_empty_positions(grid: tp.List[tp.List[str]]):
     >>> find_empty_positions([['1', '2', '3'], ['4', '5', '6'], ['.', '8', '9']])
     (2, 0)
     """
-    empty = []
-    for i in range(len(grid[0])):
-        for j in range(len(grid[0])):
+    for i, row in enumerate(grid):
+        for j, _ in enumerate(row):
             if grid[i][j] == ".":
-                empty.append(i)
-                empty.append(j)
-                break
-        if len(empty) != 0:
-            break
-    if empty == []:
-        return tuple([-1, -1])
-    else:
-        return tuple(empty)
+                return i, j
+    return -1, -1
 
 
 def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.Set[str]:
@@ -144,19 +116,14 @@ def find_possible_values(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -
     >>> values == {'2', '5', '9'}
     True
     """
-    values: list = []
-    sr = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
-    sr1 = get_row(grid, pos)
-    sr2 = get_col(grid, pos)
-    sr3 = get_block(grid, pos)
-    values1 = []
-    for i in range(9):
-        p1 = sr[i] in sr1
-        p2 = sr[i] in sr2
-        p3 = sr[i] in sr3
-        if p1 == False and p2 == False and p3 == False:
-            values1.append(sr[i])
-    return set(values1)
+    sr1, sr2, sr3 = get_row(grid, pos), get_col(grid, pos), get_block(grid, pos)
+    return set(
+        [
+            str(i)
+            for i in range(1, 10)
+            if not str(i) in sr1 and not str(i) in sr2 and not str(i) in sr3
+        ]
+    )
 
 
 def solve(
@@ -178,97 +145,31 @@ def solve(
     if empty_pos == (-1, -1):
         return grid
     posib_pos_list = list(find_possible_values(grid, empty_pos))
-    for i in range(len(posib_pos_list)):
-        grid[empty_pos[0]][empty_pos[1]] = posib_pos_list[i]
-        if check_grid(grid, empty_pos[0], empty_pos[1]) == True:
-            if solve(grid):
-                return grid
-            grid[empty_pos[0]][empty_pos[1]] = "."
-        else:
-            grid[empty_pos[0]][empty_pos[1]] = "."
-
+    for _, elem in enumerate(posib_pos_list):
+        grid[empty_pos[0]][empty_pos[1]] = elem
+        if solve(grid):
+            return grid
+        grid[empty_pos[0]][empty_pos[1]] = "."
     return False
 
 
 def check_solution(solution: tp.List[tp.List[str]]) -> bool:
     """Если решение solution верно, то вернуть True, в противном случае False"""
-    pr = True
     for i in range(9):
-        if (
-            len(set(get_row(solution, (0, i)))) != len(get_row(solution, (0, i)))
-            or get_row(solution, (0, i)).count(".") != 0
-        ):
-            pr = False
-            break
-        if (
-            len(set(get_col(solution, (i, 0)))) != len(get_col(solution, (i, 0)))
-            or get_col(solution, (i, 0)).count(".") != 0
-        ):
-            pr = False
-            break
-        if (
-            len(set(get_block(solution, (1, i)))) != len(get_block(solution, (1, i)))
-            or get_block(solution, (1, i)).count(".") != 0
-        ):
-            pr = False
-            break
-        if (
-            len(set(get_block(solution, (4, i)))) != len(get_block(solution, (4, i)))
-            or get_block(solution, (4, i)).count(".") != 0
-        ):
-            pr = False
-            break
-        if (
-            len(set(get_block(solution, (7, i)))) != len(get_block(solution, (7, i)))
-            or get_block(solution, (7, i)).count(".") != 0
-        ):
-            pr = False
-            break
-    return pr
-
-
-def check_grid(grid, x, y):
-    k = 0
-    n = 0
-    m = 0
-    A = get_row(grid, (x, 0))
-    B = get_col(grid, (0, y))
-    C = get_block(grid, (x, y))
-    for i in range(9):
-        if (
-            grid[x][y] == A[i]
-            and k == 0
-            or grid[x][y] == B[i]
-            and n == 0
-            or grid[x][y] == C[i]
-            and m == 0
-        ):
-            if grid[x][y] == A[i]:
-                k += 1
-            if grid[x][y] == B[i]:
-                n += 1
-            if grid[x][y] == C[i]:
-                m += 1
-        else:
-            if A[i] == grid[x][y]:
-                return False
-            if B[i] == grid[x][y]:
-                return False
-            if C[i] == grid[x][y]:
+        sr1, sr2, sr3 = (
+            get_row(grid, (i, 0)),
+            get_col(grid, (0, i)),
+            get_block(grid, (i // 3 * 3, i // 3 * 3)),
+        )
+        if "." in sr1 or "." in sr2 or "." in sr3:
+            return False
+        for i in range(9):
+            if sr1.count(sr1[i]) > 1 or sr2.count(sr2[i]) > 1 or sr3.count(sr3[i]) > 1:
                 return False
     return True
 
 
 import random
-
-
-def num(grid: tp.List[tp.List[str]]) -> int:
-    num = 0
-    for i in range(9):
-        for j in range(9):
-            if grid[i][j] == ".":
-                num += 1
-    return num
 
 
 def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
@@ -294,11 +195,7 @@ def generate_sudoku(N: int) -> tp.List[tp.List[str]]:
     True
     """
     grid = [["." for j in range(9)] for i in range(9)]
-
-    grid_num = []
-    for i in range(9):
-        for j in range(9):
-            grid_num.append([i, j])
+    grid_num = [[i, j] for j in range(9) for i in range(9)]
     random.shuffle(grid_num)
     grid = solve(grid)
     for i in range(81 - N):

@@ -85,7 +85,7 @@ def get_block(grid: tp.List[tp.List[str]], pos: tp.Tuple[int, int]) -> tp.List[s
     ['2', '8', '.', '.', '.', '5', '.', '7', '9']
     """
     i1, j1 = pos[0] - pos[0] % 3, pos[1] - pos[1] % 3
-    return [grid[i][j] for j in range(j1, j1 + 3) for i in range(i1, i1 + 3)]
+    return [grid[i][j] for i in range(i1, i1 + 3) for j in range(j1, j1 + 3)]
 
 
 def find_empty_positions(grid: tp.List[tp.List[str]]):
@@ -157,9 +157,9 @@ def check_solution(solution: tp.List[tp.List[str]]) -> bool:
     """Если решение solution верно, то вернуть True, в противном случае False"""
     for i in range(9):
         sr1, sr2, sr3 = (
-            get_row(grid, (i, 0)),
-            get_col(grid, (0, i)),
-            get_block(grid, (i // 3 * 3, i // 3 * 3)),
+            get_row(solution, (i, 0)),
+            get_col(solution, (0, i)),
+            get_block(solution, (i // 3 * 3, i // 3 * 3)),
         )
         if "." in sr1 or "." in sr2 or "." in sr3:
             return False

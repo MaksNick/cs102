@@ -39,8 +39,7 @@ def gcd(a: int, b: int) -> int:
         return max(a, b)
     if a == 0 and b == 0:
         return 0
-    c = min(a, b)
-    m = 1
+    c, m = min(a, b), 1
     for i in range(1, c + 1):
         if a % i == 0 and b % i == 0 and i > m:
             m = i

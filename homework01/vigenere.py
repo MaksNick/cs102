@@ -10,30 +10,22 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     'LXFOPVEFRNHR'
     """
     ciphertext = []
-    for i in range(len(plaintext)):
+    for i, _ in enumerate(plaintext):
         if i > len(keyword) - 1:
-            if (
-                ord(keyword[(i) % len(keyword)]) >= 65
-                and ord(keyword[(i) % len(keyword)]) <= 90
-            ):
-                shift = ord(keyword[(i) % len(keyword)]) - ord("A")
-            else:
-                shift = ord(keyword[(i) % len(keyword)]) - ord("a")
+            symb = i % len(keyword)
+            shift = (
+                ord(keyword[symb]) - ord("A")
+                if keyword[symb].isupper()
+                else ord(keyword[symb]) - ord("a")
+            )
         else:
-            if ord(keyword[i]) >= 65 and ord(keyword[i]) <= 90:
-                shift = ord(keyword[i]) - ord("A")
-            else:
-                shift = ord(keyword[i]) - ord("a")
+            shift = (
+                ord(keyword[i]) - ord("A") if keyword[i].isupper() else ord(keyword[i]) - ord("a")
+            )
 
-        if ord(plaintext[i]) >= 65 and ord(plaintext[i]) <= 90:
+        if plaintext[i].isalpha():
             b = chr(ord(plaintext[i]) + shift)
-            if ord(b) > 90:
-                b = chr(ord(b) - 26)
-            ciphertext.append(b)
-        elif ord(plaintext[i]) >= 97 and ord(plaintext[i]) <= 122:
-            b = chr(ord(plaintext[i]) + shift)
-            if ord(b) > 122:
-                b = chr(ord(b) - 26)
+            b = chr(ord(b) - 26) if not b.isalpha() or plaintext[i].islower() != b.islower() else b
             ciphertext.append(b)
         else:
             ciphertext.append(plaintext[i])
@@ -52,30 +44,22 @@ def decrypt_vigenere(ciphertext: str, keyword: str) -> str:
     'ATTACKATDAWN'
     """
     plaintext = []
-    for i in range(len(ciphertext)):
+    for i, _ in enumerate(ciphertext):
         if i > len(keyword) - 1:
-            if (
-                ord(keyword[(i) % len(keyword)]) >= 65
-                and ord(keyword[(i) % len(keyword)]) <= 90
-            ):
-                shift = ord(keyword[(i) % len(keyword)]) - ord("A")
-            else:
-                shift = ord(keyword[(i) % len(keyword)]) - ord("a")
+            symb = i % len(keyword)
+            shift = (
+                ord(keyword[symb]) - ord("A")
+                if keyword[symb].isupper()
+                else ord(keyword[symb]) - ord("a")
+            )
         else:
-            if ord(keyword[i]) >= 65 and ord(keyword[i]) <= 90:
-                shift = ord(keyword[i]) - ord("A")
-            else:
-                shift = ord(keyword[i]) - ord("a")
+            shift = (
+                ord(keyword[i]) - ord("A") if keyword[i].isupper() else ord(keyword[i]) - ord("a")
+            )
 
-        if ord(ciphertext[i]) >= 65 and ord(ciphertext[i]) <= 90:
+        if ciphertext[i].isalpha():
             b = chr(ord(ciphertext[i]) - shift)
-            if ord(b) < 65:
-                b = chr(ord(b) + 26)
-            plaintext.append(b)
-        elif ord(ciphertext[i]) >= 97 and ord(ciphertext[i]) <= 122:
-            b = chr(ord(ciphertext[i]) - shift)
-            if ord(b) < 97:
-                b = chr(ord(b) + 26)
+            b = chr(ord(b) + 26) if not b.isalpha() or ciphertext[i].islower() != b.islower() else b
             plaintext.append(b)
         else:
             plaintext.append(ciphertext[i])

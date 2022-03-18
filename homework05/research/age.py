@@ -19,9 +19,9 @@ def age_predict(user_id: int) -> tp.Optional[float]:
     friends_list = get_friends(user_id, fields=["bdate"])
     age, count = [], 0
     for _, item in enumerate(friends_list.items):
-        if "bdate" in item: # type: ignore
-            if item["bdate"].count(".") == 2: # type: ignore
-                age.append(datetime.now().year - int(item["bdate"][len(item["bdate"]) - 4 :])) # type: ignore
+        if "bdate" in item:  # type: ignore
+            if item["bdate"].count(".") == 2:  # type: ignore
+                age.append(datetime.now().year - int(item["bdate"][len(item["bdate"]) - 4 :]))  # type: ignore
                 count += 1
     if count == 0:
         return None

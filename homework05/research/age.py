@@ -1,9 +1,9 @@
-from datetime import *
 import statistics
-import typing as tp
-import requests
 import time
+import typing as tp
+from datetime import *
 
+import requests
 from vkapi.friends import get_friends
 
 

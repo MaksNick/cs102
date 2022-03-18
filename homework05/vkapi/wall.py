@@ -63,7 +63,7 @@ def get_wall_execute(
         "version": "5.131",
         "domain": "https://api.vk.com/method",
     }
-    dom = Session(vk_config["domain"])  # type: ignore
+    dom = session.Session(vk_config["domain"])  # type: ignore
     posts = []
     for i in range((count - 1) // max_count + 1):
         try:

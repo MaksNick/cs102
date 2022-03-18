@@ -5,7 +5,7 @@ import typing as tp
 from string import Template
 
 import pandas as pd
-import requests
+import requests  # type: ignore
 from pandas import json_normalize
 from vkapi import config, session
 from vkapi.exceptions import APIError
@@ -63,7 +63,7 @@ def get_wall_execute(
         "version": "5.131",
         "domain": "https://api.vk.com/method",
     }
-    dom = Session(vk_config["domain"])
+    dom = Session(vk_config["domain"])  # type: ignore
     posts = []
     for i in range((count - 1) // max_count + 1):
         try:
@@ -82,9 +82,9 @@ def get_wall_execute(
                 domain=domain,
                 offset=offset + max_count * i,
                 j=(count - max_count * i - 1) // 100 + 1
-                if count - max_count * i < max_count + 1
+                if count - max_count * i <= max_count
                 else max_count // 100,
-                count=count - max_count * i if count - max_count * i < 101 else 100,
+                count=count - max_count * i if count - max_count * i <= 100 else 100,
                 filter=filter,
                 extended=extended,
                 fields=fields,

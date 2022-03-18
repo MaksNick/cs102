@@ -1,9 +1,9 @@
 import statistics
 import time
 import typing as tp
-from datetime import * # type: ignore
+from datetime import *  # type: ignore
 
-import requests # type: ignore
+import requests  # type: ignore
 from vkapi.friends import get_friends
 
 

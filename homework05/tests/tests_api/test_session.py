@@ -4,7 +4,6 @@ import unittest
 import httpretty
 import responses
 from requests.exceptions import ConnectionError, HTTPError, ReadTimeout, RetryError
-
 from vkapi.session import Session
 
 
@@ -85,3 +84,7 @@ class TestSession(unittest.TestCase):
         session = Session("https://example.com", max_retries=1)
         with self.assertRaises(ConnectionError):
             _ = session.get("")
+
+if __name__ == "__main__":
+    game = TestSession()
+    print(game.test_raises_on_timeout_error())

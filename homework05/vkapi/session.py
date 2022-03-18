@@ -37,13 +37,9 @@ class Session:
         self.session.mount(base_url, self.adapter)
 
     def get(self, url: str, *args: tp.Any, **kwargs: tp.Any) -> requests.Response:
-        kwargs["timeout"] = (
-            self.timeout if "timeout" not in kwargs else kwargs["timeout"]
-        )
+        kwargs["timeout"] = (self.timeout if "timeout" not in kwargs else kwargs["timeout"])
         return self.session.get(self.base_url + "/" + url, *args, **kwargs)
 
     def post(self, url: str, *args: tp.Any, **kwargs: tp.Any) -> requests.Response:
-        kwargs["timeout"] = (
-            self.timeout if "timeout" not in kwargs else kwargs["timeout"]
-        )
+        kwargs["timeout"] = (self.timeout if "timeout" not in kwargs else kwargs["timeout"])
         return self.session.post(self.base_url + "/" + url, *args, **kwargs)

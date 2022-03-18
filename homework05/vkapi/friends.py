@@ -100,9 +100,7 @@ def get_mutual(
     mutual_friends = []
     for i in range(cycles):
         user_ids = ""
-        for j in range(
-            i * 100, i * 100 + 100 if i != cycles - 1 else len(target_uids) % 100
-        ):
+        for j in range(i * 100, i * 100 + 100 if i != cycles - 1 else len(target_uids) % 100):
             user_ids = user_ids + "," + str(target_uids[j])
         user_ids = user_ids[1 : len(user_ids)]
         try:

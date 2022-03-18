@@ -21,9 +21,7 @@ def age_predict(user_id: int) -> tp.Optional[float]:
     for _, item in enumerate(friends_list.items):
         if "bdate" in item:
             if item["bdate"].count(".") == 2:
-                age.append(
-                    datetime.now().year - int(item["bdate"][len(item["bdate"]) - 4 :])
-                )
+                age.append(datetime.now().year - int(item["bdate"][len(item["bdate"]) - 4 :]))
                 count += 1
     if count == 0:
         return None

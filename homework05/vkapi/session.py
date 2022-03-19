@@ -1,8 +1,8 @@
 import typing as tp
 
-import requests
-from requests.adapters import HTTPAdapter
-from requests.packages.urllib3.util.retry import Retry
+import requests  # type: ignore
+from requests.adapters import HTTPAdapter  # type: ignore
+from requests.packages.urllib3.util.retry import Retry  # type: ignore
 
 
 class Session:
@@ -22,10 +22,24 @@ class Session:
         max_retries: int = 3,
         backoff_factor: float = 0.3,
     ) -> None:
-        pass
+        self.session = requests.Session()
+        self.base_url = base_url
+        self.timeout = timeout
+        method_whitelist = ["GET", "POST"]
+        self.retries = Retry(
+            total=max_retries,
+            backoff_factor=backoff_factor,
+            method_whitelist=method_whitelist,
+            status_forcelist=[i for i in range(400, 601)],
+        )
+        self.adapter = HTTPAdapter(max_retries=self.retries)
+        self.http = requests.Session()
+        self.session.mount(base_url, self.adapter)
 
     def get(self, url: str, *args: tp.Any, **kwargs: tp.Any) -> requests.Response:
-        pass
+        kwargs["timeout"] = self.timeout if "timeout" not in kwargs else kwargs["timeout"]
+        return self.session.get(self.base_url + url, *args, **kwargs)
 
     def post(self, url: str, *args: tp.Any, **kwargs: tp.Any) -> requests.Response:
-        pass
+        kwargs["timeout"] = self.timeout if "timeout" not in kwargs else kwargs["timeout"]
+        return self.session.post(self.base_url + url, *args, **kwargs)

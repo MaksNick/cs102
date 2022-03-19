@@ -62,7 +62,7 @@ def get_wall_execute(
         "token": "27bd1a137cebd9ec6821984765a02537871e153b61a2399456a437b847ee2fab6f261f858d814f53a95b2",
         "client_id": "8094474",
         "version": "5.131",
-        "domain": "https://api.vk.com/method",
+        "domain": "https://api.vk.com/method/",
     }
     dom = Session(vk_config["domain"])
     posts = []

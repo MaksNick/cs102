@@ -9,7 +9,7 @@ import requests  # type: ignore
 from pandas import json_normalize
 from vkapi import config, session
 from vkapi.exceptions import APIError
-from session import Session
+from vkapi.session import Session
 
 
 def get_posts_2500(

@@ -3,9 +3,9 @@ import math
 import time
 import typing as tp
 
-from vkapi import config, session
-from vkapi.exceptions import APIError
-from vkapi.session import Session
+#from vkapi import config, session
+#from vkapi.exceptions import APIError
+from session import Session
 
 QueryParams = tp.Optional[tp.Dict[str, tp.Union[str, int]]]
 
@@ -56,7 +56,7 @@ def get_friends(
         return FriendsResponse(count, list(data))
     except:
         pass
-    return FriendsResponse(0, [{"": ""}])
+    return FriendsResponse(0, [{"items": ""}])
 
 
 class MutualFriends(tp.Dict):
@@ -86,7 +86,7 @@ def get_mutual(
     :param progress: Callback для отображения прогресса.
     """
     vk_config = {
-        "token": "27bd1a137cebd9ec6821984765a02537871e153b61a2399456a437b847ee2fab6f261f858d814f53a95b2",
+        "token": "a3834712a2f44f6020dd1ebb6efaa6696b5b19acd878adfa1a95ab78df8595766331a2cae7080549b2dab",
         "client_id": "8094474",
         "version": "5.131",
         "domain": "https://api.vk.com/method/",

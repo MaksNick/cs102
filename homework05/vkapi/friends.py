@@ -38,7 +38,7 @@ def get_friends(
         "version": "5.131",
         "domain": "https://api.vk.com/method/",
     }
-    domain = Session(vk_config["domain"])  # type: ignore
+    domain = Session(vk_config["domain"])
     try:
         req = domain.get(
             "friends.get",
@@ -91,7 +91,7 @@ def get_mutual(
         "version": "5.131",
         "domain": "https://api.vk.com/method/",
     }
-    domain = Session(vk_config["domain"])  # type: ignore
+    domain = Session(vk_config["domain"])
     target_uids = [] if target_uids is None else target_uids
     if target_uid is not None:
         target_uids.append(target_uid)

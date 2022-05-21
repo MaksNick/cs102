@@ -3,10 +3,9 @@ import string
 
 import nltk
 from bayes import NaiveBayesClassifier
-from bottle import route, run, template, request, redirect
+from bottle import redirect, request, route, run, template
 from db import News, session
 from scraputils import get_news
-
 
 nltk.download("punkt")
 

@@ -1,12 +1,12 @@
+import os
 import string
 
-from bottle import route, run, template, request, redirect
-
 import nltk
-from scraputils import get_news
-from db import News, session
 from bayes import NaiveBayesClassifier
-import os
+from bottle import route, run, template, request, redirect
+from db import News, session
+from scraputils import get_news
+
 
 nltk.download("punkt")
 

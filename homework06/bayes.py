@@ -37,9 +37,7 @@ class NaiveBayesClassifier:
                 if item in self.dict:
                     for key in predict.keys():
                         predict[key] += log(self.dict[item][key])
-            prediction.append(
-                list(dict(sorted(predict.items(), key=lambda x: x[1])))[-1]
-            )
+            prediction.append(list(dict(sorted(predict.items(), key=lambda x: x[1])))[-1])
         return prediction
 
     def score(self, X_test, y_test):

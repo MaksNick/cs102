@@ -59,9 +59,7 @@ def classify_news():
     labeled = s.query(News).filter(News.label != None).all()
     bayes = NaiveBayesClassifier()
     x, y = [
-        nltk.word_tokenize(
-            item.title.translate(str.maketrans("", "", string.punctuation))
-        )
+        nltk.word_tokenize(item.title.translate(str.maketrans("", "", string.punctuation)))
         for item in labeled
     ], [item.label for item in labeled]
     bayes.fit(x[: len(x) * 7 // 10], y[: len(y) * 7 // 10])
@@ -69,9 +67,7 @@ def classify_news():
     unlabeled = s.query(News).filter(News.label == None).all()
     predict = bayes.predict(
         [
-            nltk.word_tokenize(
-                item.title.translate(str.maketrans("", "", string.punctuation))
-            )
+            nltk.word_tokenize(item.title.translate(str.maketrans("", "", string.punctuation)))
             for item in unlabeled
         ]
     )
